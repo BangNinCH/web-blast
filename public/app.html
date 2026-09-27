@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#050505" />
+  <title>Panel — Web Blast</title>
+  <link rel="stylesheet" href="/css/app.css" />
+</head>
+<body>
+  <div class="wb-shell flex min-h-screen">
+    <aside id="wb-sidebar" class="wb-sidebar flex flex-col" aria-label="Navigasi utama">
+      <div class="wb-brand">
+        <div class="wb-brand-mark">WB</div>
+        <div>
+          <div class="wb-brand-title">WEB BLAST</div>
+          <div class="wb-brand-sub">CONTROL SYSTEM // V1.0</div>
+        </div>
+      </div>
+      <div class="wb-mobile-sidebar-head">
+        <div class="wb-mobile-sidebar-title">MENU</div>
+        <button id="mobile-nav-close" class="wb-mobile-close" type="button" aria-label="Tutup menu">×</button>
+      </div>
+      <div id="nav" class="wb-nav"></div>
+      <div class="wb-profile">
+        <div class="wb-profile-box">
+          <div id="avatar" class="wb-avatar">W</div>
+          <div class="min-w-0">
+            <div id="profile-name" class="wb-profile-name truncate"></div>
+            <div id="profile-role" class="wb-profile-role"></div>
+          </div>
+        </div>
+        <button id="logout" class="btn-danger wb-logout" type="button">Keluar</button>
+      </div>
+    </aside>
+
+    <div class="wb-main flex min-w-0 flex-1 flex-col">
+      <header class="wb-header">
+        <div class="wb-header-main">
+          <button id="mobile-nav-toggle" class="wb-mobile-menu-btn" type="button" aria-label="Buka menu" aria-controls="wb-sidebar" aria-expanded="false">
+            <span></span><span></span><span></span>
+          </button>
+          <div class="min-w-0">
+          <div class="wb-header-title">OPERATIONS CONSOLE</div>
+          <div id="header-page" class="wb-header-sub">WEB BLAST // CONTROL CENTER</div>
+          </div>
+        </div>
+        <div class="wb-header-tools">
+          <div id="global-search-wrap" class="wb-search-wrap">
+            <span class="wb-search-icon">⌕</span>
+            <input id="global-search" class="wb-search" type="search" autocomplete="off" placeholder="Cari worker..." />
+            <div id="global-search-results" class="wb-search-results hidden"></div>
+          </div>
+          <div class="wb-header-status">SYSTEM ONLINE</div>
+          <button id="notifications-btn" class="wb-icon-btn" type="button" aria-label="Notifikasi">🔔<span id="notification-count" class="wb-notification-count hidden">0</span></button>
+          <button id="mobile-logout" class="btn-ghost md:hidden" type="button">Keluar</button>
+        </div>
+        <div id="notification-panel" class="wb-notification-panel hidden">
+          <div class="wb-notification-head">
+            <div><div class="wb-page-kicker">// system.notifications</div><h3>NOTIFICATIONS</h3></div>
+            <button id="notification-read-all" class="btn-ghost" type="button">Tandai semua dibaca</button>
+          </div>
+          <div id="notification-list" class="wb-notification-list"></div>
+        </div>
+      </header>
+      <div id="mobile-nav-overlay" class="wb-mobile-overlay" aria-hidden="true"></div>
+      <main id="view" class="wb-view flex-1"></main>
+    </div>
+  </div>
+  <script src="/socket.io/socket.io.js"></script>
+  <script type="module" src="/js/app.js"></script>
+</body>
+</html>

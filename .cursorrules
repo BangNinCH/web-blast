@@ -1,0 +1,51 @@
+# .cursorrules — Node.js + Tailwind CSS
+
+## Stack
+- Runtime: Node.js (ES Modules)
+- CSS: Tailwind CSS v3+
+- Package manager: npm
+- No framework assumed unless specified in prompt
+
+## JavaScript Style
+- ES2022+: arrow functions, async/await, optional chaining (`?.`), nullish coalescing (`??`)
+- No `var`, no callbacks — use Promises or async/await
+- No semicolons, single quotes, 2-space indent
+- Destructure where it improves readability
+- Small, single-purpose functions
+
+## Node.js Rules
+- Use `node:` prefix for built-ins: `import { readFile } from 'node:fs/promises'`
+- File paths: always `path.join()` / `path.resolve()`
+- Secrets: only `process.env`, never hardcoded
+- Prefer native `fetch` over axios unless already in dependencies
+- Error handling: `try/catch` on every async function
+- Prefer `fs/promises` over callback-style `fs`
+
+## Tailwind CSS Rules
+- Utility-first: no custom CSS unless Tailwind can't cover it
+- Use `@apply` only for repeated multi-class component patterns
+- Class order: layout → flexbox/grid → spacing → sizing → typography → color → effects → responsive
+- Responsive prefix order: base → `sm:` → `md:` → `lg:` → `xl:`
+- Use Tailwind design tokens (colors, spacing) — avoid arbitrary values like `w-[347px]` unless necessary
+- No inline `style={}` if a Tailwind utility exists
+
+## File & Folder Conventions
+- Source code in `/src`, static assets in `/public`
+- One responsibility per file
+- Filenames: `kebab-case.js` for modules, `PascalCase.js` for classes
+
+## AI Behavior Rules
+- Show only new or changed code — skip unchanged boilerplate
+- No lengthy explanations unless explicitly asked
+- Code over prose
+- If multiple solutions exist: implement the best one, mention alternatives in one line
+- No `console.log` unless asked
+- No placeholder comments (`// TODO`, `// implement here`)
+- Do not repeat code already visible in context
+- Do not install packages not already in `package.json` without asking first
+
+## Hard Limits
+- No `require()` — this is ESM
+- No test files unless explicitly requested
+- No inline styles when Tailwind applies
+- No magic numbers — use named constants

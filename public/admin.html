@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#050505">
+  <title>Admin — Web Blast</title><link rel="stylesheet" href="/css/app.css">
+</head>
+<body>
+  <div class="wb-shell flex min-h-screen"><aside class="wb-sidebar flex flex-col">
+    <div class="wb-brand"><div class="wb-brand-mark">WB</div><div><div class="wb-brand-title">WEB BLAST</div><div class="wb-brand-sub">ADMIN // CONTROL CENTER</div></div></div>
+    <nav class="wb-nav"><a class="wb-nav-link is-active" href="/app.html"><span class="wb-nav-icon">⌂</span>Dashboard</a><a class="wb-nav-link" href="/app.html#monitor-jobs"><span class="wb-nav-icon">◉</span>Monitor Jobs</a><a class="wb-nav-link" href="/app.html#workers"><span class="wb-nav-icon">◌</span>Worker</a><a class="wb-nav-link" href="/app.html#network"><span class="wb-nav-icon">⌁</span>Jaringan</a><a class="wb-nav-link" href="/app.html#withdraw"><span class="wb-nav-icon">◇</span>Withdraw</a></nav>
+    <div class="wb-profile"><div class="wb-profile-box"><div class="wb-avatar">A</div><div><div id="username" class="wb-profile-name">ADMIN</div><div class="wb-profile-role">Admin</div></div></div><button class="btn-danger wb-logout" id="logout-btn">Keluar</button></div>
+  </aside><main class="wb-main"><header class="wb-header"><div><div class="wb-header-title">ADMIN CONSOLE</div><div class="wb-header-sub">Referral network // commission // worker operations</div></div><div class="wb-header-status">SYSTEM ONLINE</div></header>
+    <div class="wb-view"><div class="wb-page-head"><div class="wb-page-kicker">// admin.dashboard</div><h1 class="wb-page-title">ADMIN CONTROL</h1><p class="wb-page-sub">Ringkasan worker referral, status WhatsApp, komisi, dan request withdraw.</p></div>
+      <section class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4" id="stats"></section>
+      <section class="card mt-5"><div class="flex flex-wrap items-center justify-between gap-3"><div><div class="wb-page-kicker">REFERRAL CODE</div><div class="mt-1 text-2xl font-black tracking-widest text-brand-700" id="referral-code"></div></div><button class="btn-ghost" id="copy-referral">Salin Kode</button></div></section>
+      <section class="card mt-5"><div class="wb-page-kicker">BALANCE</div><h2 class="mt-1 text-lg font-black">Tarik Komisi</h2><form id="withdraw-form" class="mt-4 flex flex-wrap gap-3"><input class="input max-w-xs" name="amount" type="number" min="1000" placeholder="Jumlah (Rp)" required><button class="btn-primary" type="submit">Ajukan Withdraw</button></form><div class="mt-4 space-y-2" id="withdraws-list"></div></section>
+      <section class="card mt-5"><div class="wb-page-kicker">REFERRAL WORKERS</div><h2 class="mt-1 mb-4 text-lg font-black">Worker Referral Saya</h2><div class="overflow-x-auto"><table class="w-full text-left text-sm"><thead><tr><th>Username</th><th>Online WA</th><th>Total Chat</th><th>Komisi Generated</th><th>Status</th></tr></thead><tbody id="workers-table"></tbody></table></div></section>
+    </div></main>
+  </div><script src="/socket.io/socket.io.js"></script><script type="module" src="/js/pages/admin.js"></script>
+</body></html>

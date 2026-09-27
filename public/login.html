@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#050505" />
+  <title>Masuk — Web Blast</title>
+  <link rel="stylesheet" href="/css/app.css" />
+</head>
+<body>
+  <main class="wb-auth">
+    <div class="wb-auth-wrap">
+      <section class="wb-auth-panel wb-auth-brand-panel">
+        <div class="wb-auth-logo">
+          <div class="wb-brand-mark">WB</div>
+          <div>
+            <div class="wb-brand-title">WEB BLAST</div>
+            <div class="wb-brand-sub">OPERATIONS // CONTROL CENTER</div>
+          </div>
+        </div>
+        <h1 class="wb-auth-title">Broadcast.<br><span>Monitor.</span><br>Scale.</h1>
+        <p class="wb-auth-copy">Panel broadcast WhatsApp dengan kontrol perangkat, database target, jaringan referral, komisi, dan monitoring realtime dalam satu console.</p>
+        <div class="wb-auth-tags">
+          <span class="wb-auth-tag"><strong>01</strong> Multi Role</span>
+          <span class="wb-auth-tag"><strong>02</strong> Live Monitor</span>
+          <span class="wb-auth-tag"><strong>03</strong> Device Control</span>
+        </div>
+      </section>
+      <section class="wb-auth-panel wb-auth-form">
+        <div>
+          <div class="wb-page-kicker">// authentication</div>
+          <h1>Masuk ke Console</h1>
+          <p>Gunakan akun Web Blast kamu untuk melanjutkan.</p>
+        </div>
+        <form id="form">
+          <label>Username
+            <input class="input" name="username" required autocomplete="username" placeholder="Masukkan username" />
+          </label>
+          <label>Password
+            <input class="input" type="password" name="password" required autocomplete="current-password" placeholder="Masukkan password" />
+          </label>
+          <p id="error" class="hidden text-sm text-red-400"></p>
+          <button class="btn-primary" type="submit">Masuk ke Console</button>
+        </form>
+        <div class="wb-auth-link">Worker baru? <a href="/register.html">Daftar dengan kode referral →</a></div>
+      </section>
+    </div>
+  </main>
+  <script type="module">
+    import { api, notify, saveSession } from '/js/api.js'
+    const form = document.getElementById('form')
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault()
+      const data = new FormData(form)
+      try {
+        const result = await api('/api/auth/login', {
+          method: 'POST',
+          body: JSON.stringify({ username: data.get('username'), password: data.get('password') })
+        })
+        saveSession(result)
+        location.href = '/app.html'
+      } catch (err) {
+        notify(err.message)
+      }
+    })
+  </script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#050505" />
+  <title>Daftar Worker — Web Blast</title>
+  <link rel="stylesheet" href="/css/app.css" />
+</head>
+<body>
+  <main class="wb-auth">
+    <div class="wb-auth-wrap">
+      <section class="wb-auth-panel wb-auth-brand-panel">
+        <div class="wb-auth-logo">
+          <div class="wb-brand-mark">WB</div>
+          <div>
+            <div class="wb-brand-title">WEB BLAST</div>
+            <div class="wb-brand-sub">WORKER ONBOARDING // V1.0</div>
+          </div>
+        </div>
+        <h1 class="wb-auth-title">Join the<br><span>Network.</span><br>Start Blast.</h1>
+        <p class="wb-auth-copy">Buat akun worker menggunakan kode referral admin. Setelah masuk, hubungkan perangkat WhatsApp lalu mulai menjalankan blast dari dashboard.</p>
+        <div class="wb-auth-tags">
+          <span class="wb-auth-tag"><strong>01</strong> Referral</span>
+          <span class="wb-auth-tag"><strong>02</strong> Pairing</span>
+          <span class="wb-auth-tag"><strong>03</strong> Blast</span>
+        </div>
+      </section>
+      <section class="wb-auth-panel wb-auth-form">
+        <div>
+          <div class="wb-page-kicker">// worker registration</div>
+          <h1>Buat Akun Worker</h1>
+          <p>Kode referral admin wajib diisi.</p>
+        </div>
+        <form id="form">
+          <label>Username
+            <input class="input" name="username" required placeholder="Buat username" />
+          </label>
+          <label>Password
+            <input class="input" type="password" name="password" required minlength="6" placeholder="Minimal 6 karakter" />
+          </label>
+          <label>Kode referral admin
+            <input class="input" name="referralCode" required placeholder="Contoh: ADM-XXXX" />
+          </label>
+          <p id="error" class="hidden text-sm text-red-400"></p>
+          <button class="btn-primary" type="submit">Daftar Worker</button>
+        </form>
+        <div class="wb-auth-link">Sudah punya akun? <a href="/login.html">Kembali ke login →</a></div>
+      </section>
+    </div>
+  </main>
+  <script type="module">
+    import { api, notify, saveSession } from '/js/api.js'
+    const form = document.getElementById('form')
+    const ref = new URLSearchParams(location.search).get('ref')
+    if (ref) form.referralCode.value = ref
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault()
+      const data = new FormData(form)
+      try {
+        const result = await api('/api/auth/register', {
+          method: 'POST',
+          body: JSON.stringify({ username: data.get('username'), password: data.get('password'), referralCode: data.get('referralCode') })
+        })
+        saveSession(result)
+        location.href = '/app.html'
+      } catch (err) {
+        notify(err.message)
+      }
+    })
+  </script>
+</body>
+</html>
