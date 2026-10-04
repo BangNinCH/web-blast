@@ -12,13 +12,23 @@ if (!jwtSecret) {
   throw new Error('JWT_SECRET wajib diisi di .env')
 }
 
+// Vercel tidak mengizinkan penulisan ke filesystem aplikasi.
+// Untuk TESTING saja, gunakan /tmp.
+const isVercel = Boolean(process.env.VERCEL)
+
+const dataDir = isVercel
+  ? '/tmp/web-blast-data'
+  : path.join(rootDir, 'data')
+
 export const config = {
   port: Number(process.env.PORT) || 3000,
   jwtSecret,
   superAdminUser: process.env.SUPER_ADMIN_USER || 'superadmin',
   superAdminPassword: process.env.SUPER_ADMIN_PASSWORD || 'superadmin123',
-  dataDir: path.join(rootDir, 'data'),
-  dbPath: path.join(rootDir, 'data', 'app.sqlite'),
-  sessionsDir: path.join(rootDir, 'data', 'sessions'),
+
+  dataDir,
+  dbPath: path.join(dataDir, 'app.sqlite'),
+  sessionsDir: path.join(dataDir, 'sessions'),
+
   publicDir: path.join(rootDir, 'public')
 }

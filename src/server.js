@@ -15,6 +15,7 @@ import { attachSocket } from './socket/index.js'
 
 const app = express()
 const server = http.createServer(app)
+
 const io = new Server(server, {
   cors: { origin: false }
 })
@@ -39,21 +40,37 @@ app.use('/api', (_req, res) => {
   res.status(404).json({ error: 'Endpoint tidak ditemukan' })
 })
 
+// Export Express app untuk Vercel
+export default app
+
+const isVercel = Boolean(process.env.VERCEL)
+
 const start = async () => {
-  resetRunningJobs()
-  try {
-    await restoreAllSessions()
-  } catch (error) {
-    logger.warn({ err: error }, 'restore sesi WhatsApp gagal')
+  // Background process hanya dijalankan pada server lokal/VPS.
+  // Untuk testing Vercel, jangan restore WhatsApp session
+  // dan jangan menjalankan scheduler/background blast.
+  if (!isVercel) {
+    resetRunningJobs()
+
+    try {
+      await restoreAllSessions()
+    } catch (error) {
+      logger.warn({ err: error }, 'restore sesi WhatsApp gagal')
+    }
+
+    startBlastSchedule()
   }
 
-  startBlastSchedule()
   server.listen(config.port, () => {
     logger.info({ port: config.port }, 'web blast berjalan')
   })
 }
 
-start().catch((error) => {
-  logger.error({ err: error }, 'gagal start server')
-  process.exit(1)
-})
+// npm start lokal tetap bekerja seperti sebelumnya.
+// Vercel menggunakan export default app di atas.
+if (!isVercel) {
+  start().catch((error) => {
+    logger.error({ err: error }, 'gagal start server')
+    process.exit(1)
+  })
+}
